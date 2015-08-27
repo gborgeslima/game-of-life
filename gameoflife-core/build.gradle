@@ -21,8 +21,8 @@ dependencies {
     findbugs 'com.google.code.findbugs:findbugs:1.3.9'
 }
 
-checkstyle {
-   ignoreFailures = true
+checkstyleMain {
+    ignoreFailures true
 }
 
 task pmd << {
