@@ -14,48 +14,6 @@ dependencies {
     )
 }
 
-configurations {
-    [pmd, findbugs]
-}
-
-dependencies {
-    pmd 'pmd:pmd:4.2.5'
-    findbugs 'com.google.code.findbugs:findbugs:2.0.1'
-}
-
-task pmd << {
-    println 'Running PMD static code analysis'
-    ant {
-        taskdef(name: 'pmd', classname: 'net.sourceforge.pmd.ant.PMDTask',
-                classpath: configurations.pmd.asPath)
-
-        taskdef(name: 'cpd', classname: 'net.sourceforge.pmd.cpd.CPDTask',
-                classpath: configurations.pmd.asPath)
-
-        pmd(shortFilenames: 'true', failonruleviolation: 'false',
-                rulesetfiles: 'conf/pmd-rules.xml') {
-            formatter(type: 'xml', toFile: 'build/pmd.xml')
-            fileset(dir: "src/main/java") {
-                include(name: '**/*.java')
-            }
-            fileset(dir: "src/test/java") {
-                include(name: '**/*.java')
-            }
-        }
-
-        cpd(minimumTokenCount: '50', format: 'xml',
-                ignoreIdentifiers: 'true',
-                outputFile: 'build/cpd.xml') {
-            fileset(dir: "src/main/java") {
-                include(name: '**/*.java')
-            }
-            fileset(dir: "src/test/java") {
-                include(name: '**/*.java')
-            }
-        }
-    }
-}
-
 findbugs {
   ignoreFailures = true
   toolVersion = "2.0.1"
