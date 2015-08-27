@@ -21,10 +21,6 @@ dependencies {
     findbugs 'com.google.code.findbugs:findbugs:1.3.9'
 }
 
-checkstyleMain {
-    ignoreFailures true
-}
-
 task pmd << {
     println 'Running PMD static code analysis'
     ant {
