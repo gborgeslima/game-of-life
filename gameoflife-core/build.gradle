@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: "findbugs"
 apply plugin: "pmd"
+apply plugin: "jacoco"
 
 repositories {
     jcenter()
@@ -28,6 +29,11 @@ pmd {
   reportsDir = file("$project.buildDir/reports/pmd")
   ruleSets = [ "java-basic", "java-strings", "java-braces" ]
 }
+
+jacoco {
+    reportsDir = file("$project.buildDir/reports/jacoco")
+}
+
 // add CPD to check
 check << {
   File outDir = new File('build/reports/pmd/')
