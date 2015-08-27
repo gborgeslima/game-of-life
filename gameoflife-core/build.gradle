@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'checkstyle'
+apply plugin: "findbugs"
+apply plugin: "pmd"
 
 repositories {
     jcenter()
@@ -52,5 +54,36 @@ task pmd << {
             }
         }
     }
+}
+
+findbugs {
+  ignoreFailures = true
+  toolVersion = "2.0.1"
+  sourceSets = [sourceSets.main]
+  reportsDir = file("$project.buildDir/reports/findbugs")
+  effort = "max"
+}
+
+pmd {
+  ignoreFailures = true
+  sourceSets = [sourceSets.main]
+  reportsDir = file("$project.buildDir/reports/pmd")
+  ruleSets = [
+    "basic",
+    "braces"
+  ]
+}
+// add CPD to check
+check << {
+  File outDir = new File('build/reports/pmd/')
+  outDir.mkdirs()
+  ant.taskdef(name: 'cpd', classname: 'net.sourceforge.pmd.cpd.CPDTask',
+    classpath: configurations.pmd.asPath)
+  ant.cpd(minimumTokenCount: '100', format: 'xml',
+    outputFile: new File(outDir , 'cpd.xml')) {
+    fileset(dir: "src/main/java") {
+      include(name: '**/*.java')
+    }
+  }
 }
 
