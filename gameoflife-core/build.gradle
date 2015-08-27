@@ -26,10 +26,7 @@ pmd {
   ignoreFailures = true
   sourceSets = [sourceSets.main]
   reportsDir = file("$project.buildDir/reports/pmd")
-  ruleSets = [
-    "basic",
-    "braces"
-  ]
+  ruleSets = [ "java-basic", "java-strings", "java-braces" ]
 }
 // add CPD to check
 check << {
